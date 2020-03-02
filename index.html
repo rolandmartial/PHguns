@@ -1,0 +1,57 @@
+<html>
+<head>
+<style>
+line.edge {
+    stroke-opacity: .6;
+}
+circle.gene {
+    stroke-width: 2px;
+    stroke: #AAA;
+    fill: #FFF;
+}
+circle.gene-query {
+    stroke-width: 3px;
+}
+text.gene-name {
+    font-weight: bold;
+}
+text {
+    font-size: 13;
+}
+</style>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://raw.githubusercontent.com/aaronkw/d3-network/master/d3.network.js" charset="utf-8"></script>
+</head>
+<body>
+    <div id="chart"></div>
+</body>
+
+<script type="text/javascript">
+     genes_in = [
+         { id: 0, name: "zero" },
+         { id: 1, name: "one" },
+         { id: 2, name: "two"},
+         { id: 3, name: "three", query:true}
+     ];
+
+     edges_in = [
+         { id: 0, source: 0, target: 1, weight: 0.1 },
+         { id: 1, source: 0, target: 2, weight: 0.2 },
+         { id: 2, source: 0, target: 3, weight: 0.3 },
+         { id: 3, source: 1, target: 2, weight: 0.4 },
+         { id: 4, source: 2, target: 3, weight: 0.5 }
+     ];
+
+     var network = d3.network()
+                    .genes(genes_in)
+                    .edges(edges_in)
+                    .geneText(function(d) { return d.name; });
+                    
+     d3.select("#chart")
+        .append("svg")
+        .attr("width", 500)
+        .attr("height", 500)
+        .call(network);
+        
+     network.showLegend().filter(.05, 5).draw();
+</script>
